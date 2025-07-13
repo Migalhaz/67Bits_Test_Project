@@ -2,23 +2,20 @@ using UnityEngine;
 
 namespace Game.Player
 {
+    [DefaultExecutionOrder(-110)]
     public class PlayerManager : Singleton<PlayerManager>
     {
         [Header("Unity Components")]
         [SerializeField] Rigidbody m_rigidbody;
         [SerializeField] CapsuleCollider m_playerCollider;
-        [SerializeField] UnityEngine.InputSystem.PlayerInput m_playerInput;
 
         [Header("Player Scripts")]
-        [SerializeField] PlayerInputListener m_playerInputListener;
+
 
 
         public Rigidbody m_Rigidbody => m_rigidbody;
         public CapsuleCollider m_PlayerCollider => m_playerCollider;
-        public UnityEngine.InputSystem.PlayerInput m_PlayerInput => m_playerInput;
 
-
-        public PlayerInputListener m_PlayerInputListener => m_playerInputListener;
 
 
         protected override void Awake()
@@ -37,16 +34,6 @@ namespace Game.Player
             if (!m_playerCollider)
             {
                 TryGetComponent(out m_playerCollider);
-            }
-
-            if (!m_playerInput)
-            {
-                TryGetComponent(out m_playerInput);
-            }
-
-            if (!m_playerInputListener)
-            {
-                TryGetComponent(out m_playerInputListener);
             }
         }
 

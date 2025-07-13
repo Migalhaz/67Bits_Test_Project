@@ -27,9 +27,9 @@ namespace Game.Player
             m_rig ??= PlayerManager.m_Instance.m_Rigidbody;
         }
 
-        void MoveInput(UnityEngine.InputSystem.InputAction.CallbackContext context)
+        void MoveInput(Vector3 inputDirection)
         {
-            Vector2 moveDirection = context.ReadValue<Vector2>();
+            Vector2 moveDirection = inputDirection;
             Vector3 result = new Vector3(m_moveSpeed * moveDirection.x, 0, m_moveSpeed * moveDirection.y);
             m_moveDirection = result;
         }

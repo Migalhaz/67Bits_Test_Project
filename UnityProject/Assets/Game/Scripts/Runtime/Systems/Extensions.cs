@@ -1,3 +1,5 @@
+using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 namespace Game
@@ -12,5 +14,13 @@ namespace Game
             _vector3.Set(newX, newY, newZ);
             return _vector3;
         }
+
+        public static T GetRandom<T>(this IEnumerable<T> enumerable)
+        {
+            int randomIndex = Random.Range(0, enumerable.Count());
+            return enumerable.ElementAt(randomIndex);
+        }
     }
+
+
 }
