@@ -13,11 +13,15 @@ namespace Game
 
         private void Start()
         {
-            m_playerTransform = Player.PlayerManager.m_Instance.transform;
+            m_playerTransform = Player.PlayerManager.m_Instance?.transform;
         }
 
         private void Update()
         {
+            if (!m_playerTransform)
+            {
+                return;
+            }
             float x = m_playerTransform.position.x;
 
             float zInterval = m_maxPlayerZPosition - m_minPlayerZPosition;

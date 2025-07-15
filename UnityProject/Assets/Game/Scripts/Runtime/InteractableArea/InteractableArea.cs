@@ -1,19 +1,20 @@
+using Game.Player;
 using UnityEngine;
 
-namespace Game.Player
+namespace Game
 {
-    public class PlayerSellArea : MonoBehaviour
+    public abstract class InteractableArea : MonoBehaviour
     {
         [SerializeField, Min(0)] Vector3 m_colliderSize;
         [SerializeField] Vector3 m_colliderOffset;
-        [SerializeField] LayerMask m_playerLayerMask;
-        [SerializeField] float m_timeToSell;
+        [SerializeField] LayerMask m_interactableObjectLayerMask;
+        [SerializeField] float m_timeToInteract;
         float m_currentTime;
         Vector3 m_colliderCenter => transform.TransformPoint(m_colliderOffset);
 
-        private void Awake()
+        protected virtual void Awake()
         {
-            m_currentTime = m_timeToSell;
+            m_currentTime = m_timeToInteract;
         }
 
         private void FixedUpdate()
@@ -23,21 +24,23 @@ namespace Game.Player
 
         void CheckCollision()
         {
-            bool inCollider = Physics.CheckBox(m_colliderCenter, m_colliderSize, Quaternion.identity, m_playerLayerMask);
+            bool inCollider = Physics.CheckBox(m_colliderCenter, m_colliderSize, Quaternion.identity, m_interactableObjectLayerMask);
 
             if (!inCollider)
             {
-                m_currentTime = m_timeToSell;
-                return;    
+                m_currentTime = m_timeToInteract;
+                return;
             }
-            
+
             m_currentTime -= Time.fixedDeltaTime;
             if (m_currentTime <= 0)
             {
-                m_currentTime = m_timeToSell;
-                PlayerStackerObserveManager.RequestPopStack();
+                m_currentTime = m_timeToInteract;
+                Interact();
             }
         }
+
+        protected abstract void Interact();
 
         private void OnDrawGizmosSelected()
         {

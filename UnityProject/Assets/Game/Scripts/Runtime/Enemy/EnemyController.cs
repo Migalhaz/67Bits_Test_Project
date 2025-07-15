@@ -14,9 +14,22 @@ namespace Game.Enemy
 
         protected override AbstractState FirstState() => m_idleState;
 
-        private void Start()
+        private void Awake()
         {
             StartController();
         }
+
+        public void DestroyEnemy(float timeToDestroy)
+        {
+            StopController();
+            Destroy(gameObject, timeToDestroy);
+        }
+    }
+
+    public static class EnemyObserverManager
+    {
+        public static System.Action<EnemyController> m_OnEnterDeadState = null;
+
+        public static void EnterDeadState(EnemyController controller) => m_OnEnterDeadState?.Invoke(controller);
     }
 }

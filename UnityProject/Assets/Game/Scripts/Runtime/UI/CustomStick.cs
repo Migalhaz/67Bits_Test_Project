@@ -3,7 +3,7 @@ using UnityEngine.EventSystems;
 using UnityEngine.UI;
 using UnityEngine.InputSystem;
 
-namespace Game
+namespace Game.HUD
 {
     public class CustomStick : MonoBehaviour, IDragHandler, IPointerDownHandler, IPointerUpHandler
     {

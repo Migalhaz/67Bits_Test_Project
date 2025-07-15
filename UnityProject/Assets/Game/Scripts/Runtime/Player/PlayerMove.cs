@@ -59,7 +59,6 @@ namespace Game.Player
 
             Quaternion result = Quaternion.Euler(0, finalYAngle, 0);
             m_rig.MoveRotation(result);
-            //m_rig.transform.rotation = result;
         }
 
         private void Reset()

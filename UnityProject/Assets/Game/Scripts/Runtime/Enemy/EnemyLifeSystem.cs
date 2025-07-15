@@ -8,12 +8,14 @@ namespace Game.Enemy
         [Header("Components")]
         [SerializeField] Collider m_enemyCollider;
         [SerializeField] EnemyController m_enemyController;
-        [SerializeField] MeshRenderer m_mesh;
+        [SerializeField] Transform m_transformToStack;
 
         [SerializeField] float m_timeInCollision = 2;
         float m_currentTime;
 
         bool m_inCollision;
+        bool m_isStacked;
+
 
         private void Awake()
         {
@@ -25,16 +27,12 @@ namespace Game.Enemy
         {
             PlayerAttackObserverManager.m_OnEnterAttackCollision += EnterCollision;
             PlayerAttackObserverManager.m_OnExitAttackCollision += ExitCollision;
-         
-            PlayerStackerObserveManager.m_OnEnterStack += DisableCollider;
         }
 
         private void OnDisable()
         {
             PlayerAttackObserverManager.m_OnEnterAttackCollision -= EnterCollision;
             PlayerAttackObserverManager.m_OnExitAttackCollision -= ExitCollision;
-
-            PlayerStackerObserveManager.m_OnEnterStack -= DisableCollider;
         }
 
         void Update()
@@ -60,15 +58,19 @@ namespace Game.Enemy
 
         void EnterCollision(Collider collider)
         {
+            Debug.Log("A");
             if (m_inCollision)
             {
                 return;
             }
+            Debug.Log("b");
 
             if (m_enemyCollider != collider)
             {
                 return;
             }
+
+            Debug.Log("c");
 
             m_inCollision = true;
             
@@ -99,25 +101,13 @@ namespace Game.Enemy
 
         void Death()
         {
-            m_mesh.material.color = Color.black;
             EnemyDeadState deadState = m_enemyController.m_DeadState;
             m_enemyController.ForceSwitchState(deadState);
-            //transform.rotation = Quaternion.Euler(90, transform.eulerAngles.y, transform.eulerAngles.z);
         }
 
         void MoveToStack()
         {
-            PlayerStackerObserveManager.RequestStack(transform);
-        }
-
-        void DisableCollider(Transform enemyTransform)
-        {
-            if (enemyTransform != transform)
-            {
-                return;
-            }
-
-            m_enemyCollider.enabled = false;
+            PlayerStackerObserveManager.RequestStack(m_transformToStack ?? transform);
         }
 
         private void Reset()
