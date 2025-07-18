@@ -13,7 +13,6 @@ namespace Game.Player
         [SerializeField] Transform m_startPoint;
         System.Collections.Generic.List<Transform> m_points;
         [SerializeField, Min(0)] float m_pileMoveSpeed;
-        [SerializeField, Min(0)] float m_pileRotationSpeed;
         [SerializeField] float m_offset;
 
         Vector3 m_moveDirection;
@@ -28,7 +27,7 @@ namespace Game.Player
             PlayerInputObserverManager.m_OnMoveInput += SetMoveDirection;
             PlayerStackerObserveManager.m_OnRequestStackMaxCount += GetCurrentStackMaxCount;
             PlayerStackerObserveManager.m_OnRequestStackCount += GetCurrentStackCount;
-            PlayerScoreObserverManager.m_OnLevelUp += OnLevelUp;
+            PlayerScoreObserverManager.m_OnStackLevelUp += OnLevelUp;
         }
 
         private void OnDisable()
@@ -38,7 +37,7 @@ namespace Game.Player
             PlayerInputObserverManager.m_OnMoveInput -= SetMoveDirection;
             PlayerStackerObserveManager.m_OnRequestStackMaxCount -= GetCurrentStackMaxCount;
             PlayerStackerObserveManager.m_OnRequestStackCount -= GetCurrentStackCount;
-            PlayerScoreObserverManager.m_OnLevelUp += OnLevelUp;
+            PlayerScoreObserverManager.m_OnStackLevelUp += OnLevelUp;
         }
 
         private void Awake()
@@ -63,18 +62,7 @@ namespace Game.Player
                 Transform lastPoint = m_points[i - 1];
 
                 float height = m_offset - (m_offset * ((float)i / (float)m_points.Count));
-
-                //if (i > m_points.Count / 2)
-                //{
-                //    height = m_offset - (m_offset * ((float)i / (float)m_points.Count));
-                //}
-                //else
-                //{
-                //    height = m_offset;
-                //}
-
                 UpdatePosition(currentPoint, lastPoint, height);
-                //UpdateRotation(currentPoint, lastPoint);
             }
 
             void UpdatePosition(Transform currentPoint, Transform lastPoint, float height)
@@ -84,13 +72,6 @@ namespace Game.Player
                 lastPosition.y += height;
 
                 currentPoint.position = Vector3.Lerp(currentPosition, lastPosition, m_pileMoveSpeed * Time.deltaTime);
-            }
-
-            void UpdateRotation(Transform currentPoint, Transform lastPoint)
-            {
-                Quaternion currentRotation = currentPoint.rotation;
-                Quaternion lastRotation = Quaternion.Euler(lastPoint.eulerAngles.With(x: 90, z: 0));
-                currentPoint.rotation = Quaternion.Lerp(currentRotation, lastRotation, m_pileRotationSpeed * Time.deltaTime);
             }
         }
 

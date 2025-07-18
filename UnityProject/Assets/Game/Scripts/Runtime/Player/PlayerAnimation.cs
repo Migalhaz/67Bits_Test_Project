@@ -15,7 +15,8 @@ namespace Game.Player
         private void OnEnable()
         {
             Enemy.EnemyObserverManager.m_OnEnterDeadState += KillEnemy;
-            PlayerScoreObserverManager.m_OnLevelUp += PlayVictory;
+            PlayerScoreObserverManager.m_OnStackLevelUp += PlayVictory;
+            PlayerScoreObserverManager.m_OnBodyPriceLevelUp += PlayVictory;
 
             PlayerInputObserverManager.m_OnMoveInput += MoveInput;
         }
@@ -23,7 +24,8 @@ namespace Game.Player
         private void OnDisable()
         {
             Enemy.EnemyObserverManager.m_OnEnterDeadState -= KillEnemy;
-            PlayerScoreObserverManager.m_OnLevelUp -= PlayVictory;
+            PlayerScoreObserverManager.m_OnStackLevelUp -= PlayVictory;
+            PlayerScoreObserverManager.m_OnBodyPriceLevelUp -= PlayVictory;
 
             PlayerInputObserverManager.m_OnMoveInput -= MoveInput;
         }

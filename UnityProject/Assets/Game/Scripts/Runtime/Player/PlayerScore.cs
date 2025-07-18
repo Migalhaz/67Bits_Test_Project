@@ -7,12 +7,14 @@ namespace Game.Player
         int m_stackCount;
         int m_popCount;
         int m_currentMoney;
+        int m_currentBodyPrice;
 
         private void Awake()
         {
             m_stackCount = 0;
             m_popCount = 0;
             m_currentMoney = 0;
+            m_currentBodyPrice = 1;
         }
 
         private void Start()
@@ -30,6 +32,8 @@ namespace Game.Player
 
             PlayerScoreObserverManager.m_OnRequestMoneyValue += GetCurrentMoney;
             PlayerScoreObserverManager.m_OnRequestChangeMoneyValue += UpdateMoneyValue;
+
+            PlayerScoreObserverManager.m_OnBodyPriceLevelUp += IncreaseBodyPrice;
         }
         private void OnDisable()
         {
@@ -39,6 +43,8 @@ namespace Game.Player
 
             PlayerScoreObserverManager.m_OnRequestMoneyValue -= GetCurrentMoney;
             PlayerScoreObserverManager.m_OnRequestChangeMoneyValue -= UpdateMoneyValue;
+
+            PlayerScoreObserverManager.m_OnBodyPriceLevelUp -= IncreaseBodyPrice;
         }
 
         void IncreaseStackCount(Transform _)
@@ -55,8 +61,21 @@ namespace Game.Player
 
         void IncreaseMoney(Transform _)
         {
-            UpdateMoneyValue(m_currentMoney + m_popCount);
+            UpdateMoneyValue(m_currentMoney + m_currentBodyPrice);
         }
+
+        void IncreaseBodyPrice(int areaLevel)
+        {
+            ++m_currentBodyPrice;
+        }
+
+#if UNITY_EDITOR
+        [ContextMenu("Add Money")]
+        public void DebugMoney()
+        {
+            UpdateMoneyValue(70000);
+        }
+#endif
 
         public int GetCurrentMoney() => m_currentMoney;
         public void UpdateMoneyValue(int newValue)

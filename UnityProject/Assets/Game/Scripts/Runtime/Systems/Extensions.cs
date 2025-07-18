@@ -6,6 +6,20 @@ namespace Game
 {
     public static class Extensions 
     {
+        static Dictionary<float, WaitForSeconds> m_waitForSeconds;
+        public static WaitForSeconds GetWaitForSeconds(float seconds)
+        {
+            m_waitForSeconds ??= new Dictionary<float, WaitForSeconds>();
+            if (m_waitForSeconds.TryGetValue(seconds, out WaitForSeconds result))
+            {
+                return result;
+            }
+
+            WaitForSeconds newWaitForSeconds = new WaitForSeconds(seconds);
+            m_waitForSeconds.Add(seconds, newWaitForSeconds);
+            return newWaitForSeconds;
+        }
+
         public static Vector3 With(this Vector3 _vector3, float? x = null, float? y = null, float? z = null)
         {
             float newX = x is null ? _vector3.x : (float)x;

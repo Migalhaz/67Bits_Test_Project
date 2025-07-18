@@ -52,7 +52,8 @@ namespace Game.Player
         public static System.Func<int> m_OnRequestMoneyValue = null;
         public static System.Action<int> m_OnRequestChangeMoneyValue = null;
 
-        public static System.Action<int> m_OnLevelUp = null;
+        public static System.Action<int> m_OnStackLevelUp = null;
+        public static System.Action<int> m_OnBodyPriceLevelUp = null;
 
         public static void UpdateStackCount(int newStackCount) => m_OnPlayerStackCountUpdate?.Invoke(newStackCount);
         public static void UpdatePopCount(int newPopCount) => m_OnPlayerPopCountUpdate?.Invoke(newPopCount);
@@ -61,6 +62,7 @@ namespace Game.Player
         public static int? RequestMoney() => m_OnRequestMoneyValue?.Invoke();
         public static void RequestChangeMoneyValue(int newValue) => m_OnRequestChangeMoneyValue?.Invoke(newValue);
 
-        public static void LevelUp(int newLevel) => m_OnLevelUp?.Invoke(newLevel);
+        public static void StackLevelUp(int newLevel) => m_OnStackLevelUp?.Invoke(newLevel);
+        public static void BodyPriceLevelUp(int newLevel) => m_OnBodyPriceLevelUp?.Invoke(newLevel);
     }
 }

@@ -2170,7 +2170,7 @@ Transform:
   m_GameObject: {fileID: 4840427703399277386}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -4, y: 0, z: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -2220,6 +2220,7 @@ MonoBehaviour:
   m_onStopController:
     m_PersistentCalls:
       m_Calls: []
+  <m_VisualTransform>k__BackingField: {fileID: 2957966930856148058}
   m_idleState:
     m_canBeInterrupt: 1
     m_stateEvents:
@@ -2273,7 +2274,8 @@ MonoBehaviour:
     m_animationCrossfade: 0
     m_midleRig: {fileID: 1057993399340955719}
     m_collider: {fileID: 4493337796118177119}
-    m_lifeTimeOutStack: 1
+    m_lifeTimeAfterExitStack: 1
+    m_lifeTimeOutStack: 4
     m_transformToStack: {fileID: 2957966930856148058}
 --- !u!114 &8527083678765961870
 MonoBehaviour:

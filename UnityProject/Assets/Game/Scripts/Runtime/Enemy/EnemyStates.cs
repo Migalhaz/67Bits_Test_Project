@@ -66,6 +66,11 @@ namespace Game.Enemy
             AddTransition(m_stateTransition);
         }
 
+        public void SetPoints(List<Transform> newPoints)
+        {
+            m_points = new List<Transform>(newPoints);
+        }
+
         public override void UpdateState(StateMachineController stateMachineController)
         {
             base.UpdateState(stateMachineController);
@@ -128,16 +133,20 @@ namespace Game.Enemy
     {
         [SerializeField] Rigidbody m_midleRig;
         [SerializeField] Collider m_collider;
+        [SerializeField, Min(0)] float m_lifeTimeAfterExitStack;
         [SerializeField, Min(0)] float m_lifeTimeOutStack;
+        float m_currentLifeTimeOutStack;
         [SerializeField] Transform m_transformToStack;
         bool m_wasPopFromStack;
+        bool m_inStack;
         public override void EnterState(StateMachineController stateMachineController)
         {
             m_collider.isTrigger = true;
             m_wasPopFromStack = false;
             base.EnterState(stateMachineController);
             m_animator.enabled = false;
-
+            m_inStack = false;
+            m_currentLifeTimeOutStack = m_lifeTimeOutStack;
             EnemyObserverManager.EnterDeadState(m_controller);
             PlayerStackerObserveManager.m_OnEnterStack += OnEnterStack;
             PlayerStackerObserveManager.m_OnExitStack += OnPopFromStack;
@@ -146,12 +155,23 @@ namespace Game.Enemy
         public override void UpdateState(StateMachineController stateMachineController)
         {
             base.UpdateState(stateMachineController);
+            if (!m_inStack)
+            {
+                m_currentLifeTimeOutStack -= Time.deltaTime;
+
+                if (m_currentLifeTimeOutStack <= 0)
+                {
+                    m_controller.DestroyEnemy(0);
+                    return;
+                }
+            }
+
             if (!m_wasPopFromStack)
             {
                 return;
             }
             
-            m_controller.DestroyEnemy(m_lifeTimeOutStack);
+            m_controller.DestroyEnemy(m_lifeTimeAfterExitStack);
         }
 
         void OnEnterStack(Transform enemyTransform)
@@ -164,14 +184,13 @@ namespace Game.Enemy
             {
                 return;
             }
+            m_inStack = true;
             m_midleRig.isKinematic = true;
             m_collider.enabled = false;
         }
 
         void OnPopFromStack(Transform enemyTransform)
         {
-            Debug.Log("Pop Stack");
-
             if (enemyTransform != m_transformToStack)
             {
                 return;

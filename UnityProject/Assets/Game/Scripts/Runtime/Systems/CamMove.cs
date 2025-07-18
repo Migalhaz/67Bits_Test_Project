@@ -5,11 +5,17 @@ namespace Game
     public class CamMove : MonoBehaviour
     {
         Transform m_playerTransform;
-        [SerializeField] float m_minPlayerZPosition;
-        [SerializeField] float m_maxPlayerZPosition;
-
+        
+        [Header("X Settings")]
+        [SerializeField] Vector2 m_clampXPosition;
+        
+        [Header("Y Settings")]
         [SerializeField] float m_yCamPositionBuffer;
         [SerializeField] float m_minYCamPosition;
+
+        [Header("Z Settings")]
+        [SerializeField] float m_minPlayerZPosition;
+        [SerializeField] float m_maxPlayerZPosition;
 
         private void Start()
         {
@@ -22,7 +28,7 @@ namespace Game
             {
                 return;
             }
-            float x = m_playerTransform.position.x;
+            float x = Mathf.Clamp(m_playerTransform.position.x, m_clampXPosition.x, m_clampXPosition.y);
 
             float zInterval = m_maxPlayerZPosition - m_minPlayerZPosition;
             float currentZ = (m_playerTransform.position.z - m_minPlayerZPosition) / zInterval;
