@@ -80,7 +80,6 @@ namespace Game.Player
         public int GetCurrentMoney() => m_currentMoney;
         public void UpdateMoneyValue(int newValue)
         {
-            Debug.Log($"Updating money {newValue}");
             m_currentMoney = newValue;
             PlayerScoreObserverManager.UpdateMoney(m_currentMoney);
         }

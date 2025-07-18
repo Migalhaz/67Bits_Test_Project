@@ -58,19 +58,15 @@ namespace Game.Enemy
 
         void EnterCollision(Collider collider)
         {
-            Debug.Log("A");
             if (m_inCollision)
             {
                 return;
             }
-            Debug.Log("b");
 
             if (m_enemyCollider != collider)
             {
                 return;
             }
-
-            Debug.Log("c");
 
             m_inCollision = true;
             
