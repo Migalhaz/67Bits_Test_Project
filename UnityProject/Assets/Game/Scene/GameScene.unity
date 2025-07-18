@@ -5338,6 +5338,10 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 2374196569361057428, guid: 386016c0a454ddf47956ffb271b1c3f9, type: 3}
+      propertyPath: m_pileMoveSpeed
+      value: 20
+      objectReference: {fileID: 0}
+    - target: {fileID: 2374196569361057428, guid: 386016c0a454ddf47956ffb271b1c3f9, type: 3}
       propertyPath: m_startStackMaxCount
       value: 5
       objectReference: {fileID: 0}

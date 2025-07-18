@@ -173,7 +173,7 @@ MonoBehaviour:
   m_startStackMaxCount: 5
   m_stackLevelMultiplier: 2
   m_startPoint: {fileID: 524634407028692261}
-  m_pileMoveSpeed: 30
+  m_pileMoveSpeed: 20
   m_offset: 0.6
 --- !u!114 &1707245391882973825
 MonoBehaviour:
