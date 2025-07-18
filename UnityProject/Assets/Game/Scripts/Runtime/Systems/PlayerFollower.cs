@@ -6,9 +6,7 @@ namespace Game
     {
         Transform m_playerTransform;
         [SerializeField] Vector3 m_positionOffset;
-        //[SerializeField] Vector3 m_eulerAnglesOffset;
         [SerializeField, Min(0)] float m_moveSpeed;
-        //[SerializeField, Min(0)] float m_rotationSpeed;
 
 
         private void Start()
